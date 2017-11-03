@@ -2,6 +2,8 @@ package org.accenture.buffer2;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Buffer<T> {
   private Queue<T> buffer;
@@ -9,6 +11,8 @@ public class Buffer<T> {
   int numberOfPut = 0;
   int numberOfGet = 0;
 
+  private static final Logger LOGGER = LogManager.getLogger(Buffer.class);
+  
   /**
    * Constructor
    * 
@@ -23,7 +27,7 @@ public class Buffer<T> {
     if (buffer.size() == capacity)
       throw new BufferException("Buffer está lleno");
 
-    System.out.println("Element inserted");
+    LOGGER.info("Element inserted");
 
     buffer.add(element);
     numberOfPut++;
@@ -34,10 +38,10 @@ public class Buffer<T> {
       throw new BufferException("Buffer está vacío");
 
     T value = buffer.remove();
-    System.out.println("Element extracted");
+    LOGGER.info("Element extracted");
 
     numberOfGet++;
-    return (T) value;
+    return value;
   }
 
   public int getNumberOfElements() {
@@ -52,7 +56,7 @@ public class Buffer<T> {
     return capacity;
   }
 
-  public double getNumberOfOperations() {
-    return numberOfPut + numberOfGet;
+  public int getNumberOfOperations() {
+    return (numberOfPut + numberOfGet);
   }
 }
