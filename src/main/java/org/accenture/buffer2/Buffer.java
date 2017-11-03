@@ -1,57 +1,58 @@
-package org.accenture.buffer2 ;
+package org.accenture.buffer2;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Buffer {
-  private Queue<Object> buffer ;
-  private int capacity ;
-  int num_put = 0 ;
-  int num_get = 0 ;
+public class Buffer<T> {
+  private Queue<T> buffer;
+  private int capacity;
+  int numberOfPut = 0;
+  int numberOfGet = 0;
 
   /**
    * Constructor
+   * 
    * @param bufferSize
    */
   public Buffer(int bufferSize) {
-    capacity = bufferSize ;
-    buffer = new LinkedList<Object>() ;
+    capacity = bufferSize;
+    buffer = new LinkedList<T>();
   }
 
-  public void put(Object element) {
-      if (buffer.size() == capacity)
-          System.exit(-1); ;
+  public void put(T element) throws BufferException {
+    if (buffer.size() == capacity)
+      throw new BufferException("Buffer está lleno");
 
-      System.out.println("Element inserted");
+    System.out.println("Element inserted");
 
-      buffer.add(element) ;
-      num_put++ ;
+    buffer.add(element);
+    numberOfPut++;
   }
 
-  public Object get() throws Exception {
-    if (buffer.isEmpty()) 
-        throw new BufferException("Buffer está vacío") ;
+  public T get() throws BufferException {
+    if (buffer.isEmpty())
+      throw new BufferException("Buffer está vacío");
 
-    Object value = buffer.remove() ;
-  System.out.println("Element extracted");
-    
-  num_get++ ;
-    return value ;
+    T value = buffer.remove();
+    System.out.println("Element extracted");
+
+    numberOfGet++;
+    return (T) value;
   }
 
   public int getNumberOfElements() {
-    return buffer.size() ;
+    return buffer.size();
   }
 
   public int getNumberOfHoles() {
-    return capacity - buffer.size() ;
+    return capacity - buffer.size();
   }
 
   public int getCapacity() {
-    return capacity ;
+    return capacity;
   }
-  
+
   public double getNumberOfOperations() {
-      return num_put + num_get ;
+    return numberOfPut + numberOfGet;
   }
 }

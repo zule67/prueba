@@ -16,6 +16,6 @@ public class BufferTest
   
   @Test
   public void comprobarArrayExiste() {
-  
     
+}
 }
